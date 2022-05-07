@@ -21,6 +21,11 @@ async function run() {
         await client.connect();
         const itemsCollection = client.db('organicFruits').collection('items');
 
+        // GET for heroku
+        app.get('/hero', (req, res)=>{
+            res.send('this is for test purpose heroku');
+        })
+
         //AUTH TOKEN
 
         // app.post('/login', async (req, res) =>{
@@ -61,7 +66,7 @@ async function run() {
             const item = await itemsCollection.findOne(query);
             console.log(item)
             res.send(item);
-
+ 
         });
 
         //POST item
