@@ -74,35 +74,34 @@ async function run() {
 
         //PUT update quantity
 
-        app.put('/items/:id', async (req, res) => {
-            const id = req.params.id;
-            const newQuantity = req.body.number;
-            const query = { _id: ObjectId(id) };
-            try {
-                const item = await itemsCollection.findOne(query)
+        // app.put('/items/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const newQuantity = req.body.number;
+        //     const query = { _id: ObjectId(id) };
+        //     try {
+        //         const item = await itemsCollection.findOne(query)
 
-                const updatedQuantity = await itemsCollection.updateOne(
-                    query,
-                    {
-                        $set: { 'quantity': Number(item.quantity) + Number(newQuantity) }
-                    },
-                    { upsert: true });
+        //         const updatedQuantity = await itemsCollection.updateOne(
+        //             query,
+        //             {
+        //                 $set: { 'quantity': Number(item.quantity) + Number(newQuantity) }
+        //             },
+        //             { upsert: true });
 
-                const updatedItem = await itemsCollection.findOne(query)
+        //         const updatedItem = await itemsCollection.findOne(query)
 
-                res.send(updatedItem);
-            }
-            catch (err) {
-                console.log(err)
-                res.set(err)
-            }
-        })
+        //         res.send(updatedItem);
+        //     }
+        //     catch (err) {
+        //         console.log(err)
+        //         res.set(err)
+        //     }
+        // })
 
         
 
         //PATCH api for updating quantity
         app.patch('/updatequantity/:id', async (req, res)=>{
-            console.log("hello ",req.body.number);
             const id = req.params.id;
             itemsCollection.findOne({ _id: ObjectId(id) }).then(result => {
                 itemsCollection.updateOne(
@@ -120,8 +119,8 @@ async function run() {
             })
         })
 
+        //PATCH api for deliver decreasing
         app.patch('/items/:id', (req, res) => {
-            console.log(req.body)
             const id = req.params.id;
             itemsCollection.findOne({ _id: ObjectId(id) }).then(result => {
                 itemsCollection.updateOne(
