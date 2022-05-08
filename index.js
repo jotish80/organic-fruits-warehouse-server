@@ -45,17 +45,14 @@ async function run() {
             res.send(items);
         });
 
-        // GET logged user details
-        app.get('/items/:email', async (req, res) => {
-            const email = req.params.email;
-            try {
-                const items = await itemsCollection.find({ email })
-                res.send(items)
-            }
-            catch (err) {
-                console.log(err)
-                res.send(err)
-            }
+        // GET logged user items details
+        app.get('/orders', async (req, res) => {
+            const email = req.query.email
+            console.log(email)
+            const query = {email};
+            const cursor = itemsCollection.find(query);
+            const orders = await cursor.toArray();
+            res.send(orders)
         })
 
 
@@ -137,7 +134,6 @@ async function run() {
                         },
                     }
                 ).then(result => {
-                    console.log(result)
                     res.send(result)
                 })
             })
