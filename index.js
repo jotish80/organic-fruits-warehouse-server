@@ -17,11 +17,6 @@ async function run() {
         await client.connect();
         const itemsCollection = client.db('organicFruits').collection('items');
 
-        // GET for heroku
-        app.get('/hero', (req, res) => {
-            res.send('this is for test purpose heroku');
-        })
-
         //GET items
         app.get('/items', async (req, res) => {
             const query = {};
