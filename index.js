@@ -40,11 +40,16 @@ async function run() {
             res.send(orders)
         })
         //DELETE logged users items delete
-        app.delete('/orders/:id', async (req, res) => {
+        app.delete('/orders/:id/:email', async (req, res) => {
             const id = req.params.id;
+            const email = req.params.email;
             const query = { _id: ObjectId(id) };
             const result = await itemsCollection.deleteOne(query);
-            res.send(result);
+            const items = await itemsCollection.find({email});
+            console.log(result)
+
+            res.send(items);
+
         })
 
         //GET items by id
@@ -54,7 +59,6 @@ async function run() {
             const item = await itemsCollection.findOne(query);
             console.log(item)
             res.send(item);
-
         });
 
         //POST item
@@ -62,6 +66,7 @@ async function run() {
             const newItem = req.body;
             const newItemDetail = await itemsCollection.insertOne(newItem);
             res.send(newItemDetail);
+            
         });
 
 
